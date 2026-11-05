@@ -25,6 +25,7 @@ export const metadata: Metadata = {
   description: "Swapnayatra is your gateway to curated travel experiences. Discover handpicked destinations, tour packages, and expert travel support for your next adventure.",
 };
 
+const currentYear = new Date().getFullYear();
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,7 +38,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {children}
-        <AnimatedWaveFooter />
+        <AnimatedWaveFooter year={currentYear} />
       </body>
     </html>
   );

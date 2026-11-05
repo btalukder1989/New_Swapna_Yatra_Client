@@ -46,7 +46,14 @@ const quickLinks = [
     { label: "Contact Us", href: "/contact" },
 ];
 
-export default function AnimatedWaveFooter() {
+interface AnimatedWaveFooterProps {
+    year: number;
+}
+
+
+export default function AnimatedWaveFooter({
+    year,
+}: AnimatedWaveFooterProps) {
     const [email, setEmail] = React.useState("");
 
     function handleSubscribe(event: React.FormEvent<HTMLFormElement>) {
@@ -256,7 +263,7 @@ export default function AnimatedWaveFooter() {
                 {/* Bottom Footer */}
                 <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-orange-100 py-7 text-center sm:flex-row sm:text-left">
                     <p className="text-sm text-gray-500">
-                        © {new Date().getFullYear()} Swapnayatra. All rights reserved.
+                        © {year} Swapnayatra. All rights reserved.
                     </p>
 
                     <div className="flex flex-wrap justify-center gap-5 text-sm text-gray-500">
