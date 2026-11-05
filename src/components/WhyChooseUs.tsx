@@ -1,7 +1,7 @@
 
 "use client";
 
-import { FeatureSteps } from "../components/ui/feature-section";
+import { FeatureSteps } from "@/components/ui/feature-section";
 
 const features = [
     {

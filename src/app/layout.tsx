@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import AnimatedWaveFooter from "../components/ui/animated-wave-footer";
+import AnimatedWaveFooter from "@/components/ui/animated-wave-footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,14 +25,20 @@ export const metadata: Metadata = {
   description: "Swapnayatra is your gateway to curated travel experiences. Discover handpicked destinations, tour packages, and expert travel support for your next adventure.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
-      <AnimatedWaveFooter />
+      <body className="min-h-full flex flex-col">
+        {children}
+        <AnimatedWaveFooter />
+      </body>
     </html>
   );
 }
