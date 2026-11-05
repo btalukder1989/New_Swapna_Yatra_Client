@@ -1,4 +1,4 @@
-import { AnimatedHero } from "@/components/ui/animated-hero-section-1";
+
 import PopularDestinations from "../components/PopularDestinations";
 import SpecialOffers from "../components/SpecialOffers";
 import TravelGallery from "../components/TravelGallery";
