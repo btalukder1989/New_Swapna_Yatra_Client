@@ -1,30 +1,31 @@
-import { redirect } from "next/navigation";
-import { fetchTourByIdOrSlug } from "@/services/tourService";
+"use client";
 
-export async function generateStaticParams() {
-  return [{ id: "1" }, { id: "2" }, { id: "3" }];
-}
+import { useEffect, use } from "react";
+import { useRouter } from "next/navigation";
 
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function OfferDetailsPage({ params }: PageProps) {
-  const { id } = await params;
-  
-  // Mapping offer IDs to tour packages
-  const offerToTourMap: Record<string, string> = {
-    "1": "1", // Kashmir
-    "2": "2", // Darjeeling
-    "3": "4", // Meghalaya
-  };
+export default function OfferDetailsPage({ params }: PageProps) {
+  const router = useRouter();
+  const { id } = use(params);
 
-  const targetId = offerToTourMap[id] || id;
-  const tour = await fetchTourByIdOrSlug(targetId);
+  useEffect(() => {
+    // Mapping offer IDs to tour packages
+    const offerToTourMap: Record<string, string> = {
+      "1": "1", // Kashmir
+      "2": "2", // Darjeeling
+      "3": "4", // Meghalaya
+    };
 
-  if (tour) {
-    redirect(`/packages/${tour.id}`);
-  }
+    const targetId = offerToTourMap[id] || id;
+    router.replace(`/packages/${targetId}`);
+  }, [id, router]);
 
-  redirect("/packages");
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[#FDFBF7]">
+      <div className="h-8 w-8 rounded-full border-2 border-[#F5820B] border-t-transparent animate-spin" />
+    </div>
+  );
 }
