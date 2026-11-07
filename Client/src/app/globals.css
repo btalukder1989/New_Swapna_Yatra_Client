@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+/* =================================
+   SWAPNAYATRA - WHITE THEME
+================================= */
+
+:root {
+  --background: #ffffff;
+  --foreground: #555555;
+
+  /* Brand */
+  --primary: #ffffff;
+  --secondary: #f5820b;
+  --accent: #ff9d26;
+
+  /* Text */
+  --heading: #333333;
+  --text: #666666;
+  --muted-foreground: #999999;
+
+  /* Backgrounds */
+  --surface: #ffffff;
+  --surface-secondary: #fffaf5;
+  --surface-muted: #f9fafb;
+
+  /* Borders */
+  --border: #eeeeee;
+
+  /* Buttons */
+  --button-bg: #f5820b;
+  --button-hover: #e66b00;
+  --button-text: #ffffff;
+
+  /* shadcn UI */
+  --primary-foreground: #ffffff;
+  --ring: #f5820b;
+  --input: #eeeeee;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+
+  /* Effects */
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+
+  --color-heading: var(--heading);
+  --color-text: var(--text);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-surface: var(--surface);
+  --color-surface-secondary: var(--surface-secondary);
+  --color-surface-muted: var(--surface-muted);
+
+  --color-border: var(--border);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-playfair), Georgia, serif;
+}
+
+/* Global */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #ffffff;
+  color: #555555;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+/* Brand Gradient */
+.text-gradient {
+  background: linear-gradient(90deg, #f5820b, #ffab36);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-brand-gradient {
+  background: linear-gradient(135deg, #f5820b, #ffab36);
+}
+
+/* Buttons */
+.btn-brand {
+  background: #f5820b;
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.btn-brand:hover {
+  background: #e66b00;
+  transform: translateY(-2px);
+}
+
+/* Cards */
+.brand-card {
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+/* Selection */
+::selection {
+  background: #f5820b;
+  color: #ffffff;
+}
+
+
+/* =================================
+   SWAPNAYATRA - ANIMATED WAVE FOOTER
+================================= */
+
+@keyframes wave {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Wave Animation */
+.animate-wave {
+  animation: wave 18s linear infinite;
+  will-change: transform;
+}
+
+/* Pause animation when hovering footer */
+footer:hover .animate-wave {
+  animation-play-state: paused;
+}
+
+/* Accessibility: Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-wave {
+    animation: none;
+  }
+}
+
+
+/* =================================
+   SWAPNAYATRA - TESTIMONIAL MARQUEE
+================================= */
+
+@keyframes testimonial-marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonial-marquee {
+    animation: none !important;
+  }
+}
