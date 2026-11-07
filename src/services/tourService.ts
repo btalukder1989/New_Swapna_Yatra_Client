@@ -3,6 +3,17 @@ import { TourPackage, getAllTours, getTourByIdOrSlug } from "@/data/tours";
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
 
+const shouldSkipLocalFetch = () => {
+  if (
+    typeof window === "undefined" &&
+    (process.env.VERCEL || process.env.CI) &&
+    API_BASE_URL.includes("localhost")
+  ) {
+    return true;
+  }
+  return false;
+};
+
 export interface FetchToursQuery {
   searchTerm?: string;
   tourType?: string;
@@ -44,28 +55,30 @@ export async function fetchTours(
   const queryString = params.toString() ? `?${params.toString()}` : "";
   const url = `${API_BASE_URL}/tours${queryString}`;
 
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4000);
+  if (!shouldSkipLocalFetch()) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-    const res = await fetch(url, {
-      signal: controller.signal,
-      next: { revalidate: 30 }, // Next.js ISR cache for 30 seconds
-    });
-    clearTimeout(timeoutId);
+      const res = await fetch(url, {
+        signal: controller.signal,
+        next: { revalidate: 30 }, // Next.js ISR cache for 30 seconds
+      });
+      clearTimeout(timeoutId);
 
-    if (res.ok) {
-      const json = await res.json();
-      if (json.success && Array.isArray(json.data)) {
-        return {
-          tours: json.data,
-          meta: json.meta,
-          isLive: true,
-        };
+      if (res.ok) {
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data)) {
+          return {
+            tours: json.data,
+            meta: json.meta,
+            isLive: true,
+          };
+        }
       }
+    } catch (_err) {
+      // Backend offline or unreachable — fallback seamlessly
     }
-  } catch (_err) {
-    // Backend offline or unreachable — fallback seamlessly
   }
 
   // Local fallback filtering
@@ -109,24 +122,26 @@ export async function fetchTourByIdOrSlug(
 ): Promise<TourPackage | null> {
   const url = `${API_BASE_URL}/tours/${encodeURIComponent(idOrSlug)}`;
 
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4000);
+  if (!shouldSkipLocalFetch()) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-    const res = await fetch(url, {
-      signal: controller.signal,
-      next: { revalidate: 30 },
-    });
-    clearTimeout(timeoutId);
+      const res = await fetch(url, {
+        signal: controller.signal,
+        next: { revalidate: 30 },
+      });
+      clearTimeout(timeoutId);
 
-    if (res.ok) {
-      const json = await res.json();
-      if (json.success && json.data) {
-        return json.data as TourPackage;
+      if (res.ok) {
+        const json = await res.json();
+        if (json.success && json.data) {
+          return json.data as TourPackage;
+        }
       }
+    } catch (_err) {
+      // Backend offline or timeout
     }
-  } catch (_err) {
-    // Backend offline or timeout
   }
 
   // Graceful local fallback
@@ -140,24 +155,26 @@ export async function fetchTourByIdOrSlug(
 export async function fetchFeaturedTours(): Promise<TourPackage[]> {
   const url = `${API_BASE_URL}/tours/featured`;
 
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4000);
+  if (!shouldSkipLocalFetch()) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-    const res = await fetch(url, {
-      signal: controller.signal,
-      next: { revalidate: 30 },
-    });
-    clearTimeout(timeoutId);
+      const res = await fetch(url, {
+        signal: controller.signal,
+        next: { revalidate: 30 },
+      });
+      clearTimeout(timeoutId);
 
-    if (res.ok) {
-      const json = await res.json();
-      if (json.success && Array.isArray(json.data) && json.data.length > 0) {
-        return json.data as TourPackage[];
+      if (res.ok) {
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+          return json.data as TourPackage[];
+        }
       }
+    } catch (_err) {
+      // Backend offline
     }
-  } catch (_err) {
-    // Backend offline
   }
 
   // Fallback to top rated local tours
