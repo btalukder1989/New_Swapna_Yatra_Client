@@ -10,30 +10,31 @@ import {
     Mail,
     Send,
     Plane,
+    Heart,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "./button";
+import { Input } from "./input";
+import { Label } from "./label";
 
 const offices = [
     {
-        name: "Kolkata",
+        name: "Kolkata (Dum Dum)",
         type: "Main Office",
-        address: "Add your complete Kolkata office address",
-        phone: "Add official phone number",
+        address: "Shiv Shakti Appertments,3rd. floor,surer Math, Melabagan Estate,Basak Bagan, South Dum Dum, Kolkata, West Bengal 700074",
+        phone: "+91 7439099124",
     },
     {
-        name: "Siliguri",
+        name: "Mathabhanga (Cooch Behar)",
         type: "Regional Office",
-        address: "Add your complete Siliguri office address",
-        phone: "Add official phone number",
+        address: "10 No Ward Pachagarh, Mathabhanga, Cooch Behar, West Bengal 736146",
+        phone: "+91 9832883361",
     },
     {
-        name: "Darjeeling",
+        name: "Bangladesh",
         type: "Regional Office",
-        address: "Add your complete Darjeeling office address",
-        phone: "Add official phone number",
+        address: "Near BishoNath Majidee, Noakhali, Bangladesh",
+        phone: "+88 01788363935",
     },
 ];
 
@@ -217,18 +218,19 @@ export default function AnimatedWaveFooter({
                     {/* Contact & Social */}
                     <div>
                         <h3 className="mb-5 text-lg font-bold text-[#333333]">
-                            Get In Touch
+                            contact@swapnayatra.com
                         </h3>
 
                         <div className="space-y-4 text-sm text-gray-600">
                             <p className="flex items-start gap-3">
                                 <Mail size={17} className="mt-0.5 shrink-0 text-[#F5820B]" />
-                                Add your official email
+
                             </p>
 
                             <p className="flex items-start gap-3">
                                 <Phone size={17} className="mt-0.5 shrink-0 text-[#F5820B]" />
-                                Add your contact number
+                                +91 9832883361 (India) <br />
+                                +88 01788363935 (Bangladesh)
                             </p>
                         </div>
 
@@ -261,9 +263,24 @@ export default function AnimatedWaveFooter({
                 </div>
 
                 {/* Bottom Footer */}
-                <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-orange-100 py-7 text-center sm:flex-row sm:text-left">
+                <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-orange-100 py-7 text-center md:flex-row md:text-left">
                     <p className="text-sm text-gray-500">
                         © {year} Swapnayatra. All rights reserved.
+                    </p>
+
+                    {/* Developer Profile Link with Lots of Love */}
+                    <p className="text-xs text-gray-500 inline-flex items-center gap-1.5 justify-center">
+                        <span>Made with lots of</span>
+                        <Heart size={14} className="fill-red-500 text-red-500 inline animate-pulse" />
+                        <span>by</span>
+                        <a
+                            href="https://www.linkedin.com/in/niloy-talukder/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-semibold text-slate-800 hover:text-[#F5820B] underline decoration-orange-300 underline-offset-4 transition-colors"
+                        >
+                            Niloy Talukder
+                        </a>
                     </p>
 
                     <div className="flex flex-wrap justify-center gap-5 text-sm text-gray-500">

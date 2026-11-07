@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -13,6 +13,7 @@ import {
     CalendarDays,
     ArrowRight,
 } from "lucide-react";
+import { fetchFeaturedTours } from "@/services/tourService";
 
 interface TourPackage {
     id: string;
@@ -25,7 +26,7 @@ interface TourPackage {
     rating?: number;
 }
 
-const tourPackages: TourPackage[] = [
+const fallbackPackages: TourPackage[] = [
     {
         id: "1",
         title: "Kashmir Paradise Tour",
@@ -165,9 +166,11 @@ function PackageCard({
                 </div>
 
                 {/* Title */}
-                <h3 className="mt-3 min-h-[52px] text-lg font-bold leading-6 text-[#333333] transition-colors group-hover:text-[#F5820B]">
-                    {item.title}
-                </h3>
+                <Link href={`/packages/${item.id}`}>
+                    <h3 className="mt-3 min-h-[52px] text-lg font-bold leading-6 text-[#333333] transition-colors group-hover:text-[#F5820B]">
+                        {item.title}
+                    </h3>
+                </Link>
 
                 {/* Duration */}
                 <div className="mt-3 flex items-center gap-2 text-sm text-gray-500">
@@ -192,7 +195,7 @@ function PackageCard({
                     </div>
 
                     <Link
-                        href="/destinations"
+                        href={`/packages/${item.id}`}
                         className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F5820B] text-white transition-all hover:scale-105 hover:bg-[#E66B00]"
                         aria-label={`View ${item.title}`}
                     >
@@ -206,7 +209,20 @@ function PackageCard({
 
 export default function CarouselCards() {
     const scrollContainer = useRef<HTMLDivElement>(null);
+    const [items, setItems] = useState<TourPackage[]>(fallbackPackages);
     const [favorites, setFavorites] = useState<string[]>([]);
+
+    useEffect(() => {
+        let isMounted = true;
+        fetchFeaturedTours().then((tours) => {
+            if (isMounted && tours && tours.length > 0) {
+                setItems(tours);
+            }
+        }).catch(() => {});
+        return () => {
+            isMounted = false;
+        };
+    }, []);
 
     const scroll = (direction: "left" | "right") => {
         if (!scrollContainer.current) return;
@@ -275,7 +291,7 @@ export default function CarouselCards() {
                         </button>
 
                         <Link
-                            href="/destinations"
+                            href="/packages"
                             className="ml-2 hidden items-center gap-2 text-sm font-bold text-[#F5820B] transition hover:gap-3 sm:flex"
                         >
                             View All Packages
@@ -293,7 +309,7 @@ export default function CarouselCards() {
                         msOverflowStyle: "none",
                     }}
                 >
-                    {tourPackages.map((item) => (
+                    {items.map((item) => (
                         <div
                             key={item.id}
                             className="snap-start"
@@ -310,7 +326,7 @@ export default function CarouselCards() {
                 {/* Bottom CTA */}
                 <div className="mt-8 flex justify-center sm:hidden">
                     <Link
-                        href="/destinations"
+                        href="/packages"
                         className="inline-flex items-center gap-2 rounded-full bg-[#F5820B] px-7 py-3.5 font-semibold text-white transition hover:bg-[#E66B00]"
                     >
                         View All Packages

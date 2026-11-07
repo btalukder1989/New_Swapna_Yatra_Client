@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import AnimatedWaveFooter from "@/components/ui/animated-wave-footer";
+import AnimatedWaveFooter from "../components/ui/animated-wave-footer";
+import FloatingWhatsApp from "../components/ui/floating-whatsapp";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,6 +40,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         {children}
         <AnimatedWaveFooter year={currentYear} />
+        <FloatingWhatsApp phoneNumber="+919735656361" />
       </body>
     </html>
   );

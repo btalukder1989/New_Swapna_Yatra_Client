@@ -3,7 +3,7 @@
 
 import PolaroidLineCarousel, {
     type Slide,
-} from "@/components/ui/polaroid-line-carousel";
+} from "./ui/polaroid-line-carousel";
 
 const destinations: Slide[] = [
     {
